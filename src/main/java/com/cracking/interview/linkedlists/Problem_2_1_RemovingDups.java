@@ -45,26 +45,19 @@ public class Problem_2_1_RemovingDups {
 	}
 	
 	private static void removeDuplicatesWithoutSpace(Node head) {
-		
 		Node slowPointer = head;
-		Node fastPointer = head.next;
-		Node prev = head;
 		
-		while(slowPointer.next != null) {
-			if(fastPointer == null) {
-				prev = slowPointer.next;
-				slowPointer = slowPointer.next;
-				fastPointer = slowPointer.next;
-			}
-			else {
-				if(fastPointer.val == slowPointer.val) {
-					prev.next = fastPointer.next;
-					fastPointer = fastPointer.next;
+		while(slowPointer != null) {
+			Node fastPointer = slowPointer;
+			
+			while(fastPointer.next != null) {
+				if(fastPointer.next.val == slowPointer.val) {
+					fastPointer.next = fastPointer.next.next;
 				}else {
-					prev = fastPointer;
 					fastPointer = fastPointer.next;
 				}
 			}
+			slowPointer = slowPointer.next;
 		}
 	}
 
