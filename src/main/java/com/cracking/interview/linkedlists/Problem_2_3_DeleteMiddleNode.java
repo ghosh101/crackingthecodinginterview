@@ -2,7 +2,7 @@ package com.cracking.interview.linkedlists;
 
 import com.cracking.interview.linkedlists.MyLinkedList.Node;
 
-public class Problem_1_3_DeleteMiddleNode {
+public class Problem_2_3_DeleteMiddleNode {
 
 	public static void main(String[] args) {
 		MyLinkedList list = new MyLinkedList();

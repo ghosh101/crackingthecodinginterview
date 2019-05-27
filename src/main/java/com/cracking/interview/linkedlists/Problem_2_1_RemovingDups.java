@@ -27,6 +27,7 @@ public class Problem_2_1_RemovingDups {
 		list.printList();
 	}
 
+	//Using a HashSet takes use of O(N) space and execution is done in O(N) time
 	private static void removeDuplicates(Node head) {
 		Set<Integer> set = new HashSet<>();
 		Node node = head;
@@ -44,6 +45,7 @@ public class Problem_2_1_RemovingDups {
 		}
 	}
 	
+	//Using 2 pointers we can solve the problem in O(1) space but execution is done in O(N^2) time
 	private static void removeDuplicatesWithoutSpace(Node head) {
 		Node slowPointer = head;
 		
