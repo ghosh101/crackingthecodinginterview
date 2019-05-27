@@ -21,7 +21,8 @@ public class Problem_2_1_RemovingDups {
 
 		Node head = list.head;
 
-		removeDuplicates(head);
+		//removeDuplicates(head);
+		removeDuplicatesWithoutSpace(head);
 
 		list.printList();
 	}
@@ -39,6 +40,30 @@ public class Problem_2_1_RemovingDups {
 				set.add(node.val);
 				prev = node;
 				node = node.next;
+			}
+		}
+	}
+	
+	private static void removeDuplicatesWithoutSpace(Node head) {
+		
+		Node slowPointer = head;
+		Node fastPointer = head.next;
+		Node prev = head;
+		
+		while(slowPointer.next != null) {
+			if(fastPointer == null) {
+				prev = slowPointer.next;
+				slowPointer = slowPointer.next;
+				fastPointer = slowPointer.next;
+			}
+			else {
+				if(fastPointer.val == slowPointer.val) {
+					prev.next = fastPointer.next;
+					fastPointer = fastPointer.next;
+				}else {
+					prev = fastPointer;
+					fastPointer = fastPointer.next;
+				}
 			}
 		}
 	}
