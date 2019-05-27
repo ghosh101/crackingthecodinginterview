@@ -2,7 +2,7 @@ package com.cracking.interview.linkedlists;
 
 public class MyLinkedList {
 
-	class Node{
+	static class Node{
 		int val;
 		Node next;
 		
