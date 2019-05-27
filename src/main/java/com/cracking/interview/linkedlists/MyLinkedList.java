@@ -27,6 +27,15 @@ public class MyLinkedList {
 		}
 	}
 	
+	public Node getNode(int value){
+		Node node = head;
+		while(node != null) {
+			if(node.val == value) break;
+			node = node.next;
+		}
+		return node;
+	}
+	
 	public void printList() {
 		while(head != null) {
 			System.out.print(head.val + "->");
