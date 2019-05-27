@@ -22,6 +22,7 @@ public class Problem_2_3_DeleteMiddleNode {
 	}
 
 	//this solution is not possible if the given node is the last node
+	//Space: O(1), Time: O(1)
 	private static void deleteMiddleNode(Node node) {
 		Node next = node.next;
 		node.val = next.val;
