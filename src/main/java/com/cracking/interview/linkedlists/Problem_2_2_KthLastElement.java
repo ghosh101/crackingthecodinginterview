@@ -24,7 +24,7 @@ public class Problem_2_2_KthLastElement {
 	}
 
 	private static int findKthLastElement(Node head, int k) {
-		Node dummy = new Node(0); //if the kth element is the head node, that is why the dummy node is needed.
+		Node dummy = new Node(0); //if the kth element is the head node, and if the problem was to delete that node, the dummy node is needed.
 		dummy.next = head;
 		
 		Node slowPointer = dummy;
