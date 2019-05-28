@@ -24,7 +24,7 @@ public class Problem_2_1_RemovingDups {
 		//removeDuplicates(head);
 		removeDuplicatesWithoutSpace(head);
 
-		list.printList();
+		MyLinkedList.printList(head);
 	}
 
 	//Using a HashSet takes use of O(N) space and execution is done in O(N) time

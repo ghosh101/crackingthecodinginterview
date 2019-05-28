@@ -36,10 +36,10 @@ public class MyLinkedList {
 		return node;
 	}
 	
-	public void printList() {
-		while(head != null) {
-			System.out.print(head.val + "->");
-			head = head.next;
+	public static void printList(Node node) {
+		while(node != null) {
+			System.out.print(node.val + "->");
+			node = node.next;
 		}
 		System.out.print("NULL");
 	}
