@@ -19,7 +19,7 @@ public class Problem_2_7_Intersection {
 		list2.addNode(7);
 		list2.addNode(8);
 		list2.addNode(9);
-		//list2.getNode(9).next = list1.getNode(4); //forming the intersection
+		list2.getNode(9).next = list1.getNode(4); //forming the intersection
 
 		Node head1 = list1.head;
 		Node head2 = list2.head;
