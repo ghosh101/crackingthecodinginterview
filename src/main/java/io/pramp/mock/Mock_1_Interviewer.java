@@ -33,27 +33,27 @@ public class Mock_1_Interviewer {
 
 	static boolean isMatch(String text, String pattern) {
 		Stack<Character> stack = new Stack<>();
-		
+
 		for(int i=0; i<pattern.length(); i++){
 			stack.push(pattern.charAt(i));
 		}
 
 		int i = text.length()-1;
-		
+
 		while(!stack.isEmpty()){
 			char c = stack.pop();
-			
+
 			if(c == '.'){
 				i--;
 				continue;
 			}else if(c == '*'){
 				char ch = stack.pop();
-				
+
 				if(ch == '.') {
 					if(!stack.isEmpty()) {
 						char t = text.charAt(i);
 						i--;
-						
+
 						while(i > 0 && t == text.charAt(i)){
 							i--;
 						}
@@ -61,7 +61,7 @@ public class Mock_1_Interviewer {
 						return true;
 					}
 				}
-				
+
 				while(i >= 0 && text.charAt(i) == ch){
 					i--;
 				}
@@ -70,19 +70,55 @@ public class Mock_1_Interviewer {
 				i--;
 			}
 		}
-		
+
 		if(i >= 0) return false;
-		
+
 		return true;
 	}
 
 	public static void main(String[] args) {
 
-		String text = "abaaab";
-		String pattern = "ab.*";
+		String text = "abb";
+		String pattern = "ab*";
 
-		boolean check = isMatch(text, pattern);
+		//boolean check = isMatch(text, pattern);
+		boolean check = isMatchRecursion(text, pattern);
+
 		System.out.println(check);
 	}
 
+	private static boolean isMatchRecursion(String text, String pattern) {
+		return isMatchHelper(text, pattern, 0, 0);
+	}
+
+	private static boolean isMatchHelper(String text, String pattern, int textIndex, int patIndex) {
+		//base cases - one of the indexes reached the end of text or pattern
+		if (textIndex >= text.length()) {
+			if (patIndex >= pattern.length()) 
+				return true;
+			else {
+				if ((patIndex + 1 < pattern.length()) && (pattern.charAt(patIndex + 1) == '*')) 
+					return isMatchHelper(text, pattern, textIndex, patIndex + 2);
+				else return false;
+			}
+		}
+
+		else if ((patIndex >= pattern.length()) && (textIndex < text.length())) return false;
+
+		//string matching for character followed by '*'
+		else if ((patIndex + 1 < pattern.length()) && (pattern.charAt(patIndex + 1) == '*')){
+			if ((pattern.charAt(patIndex) == '.') || (text.charAt(textIndex) == pattern.charAt(patIndex)))
+				return (isMatchHelper(text, pattern, textIndex, patIndex + 2) || isMatchHelper(text, pattern, textIndex + 1, patIndex));
+			else return isMatchHelper(text, pattern, textIndex, patIndex + 2);
+		}
+
+		//string matching for '.' or ordinary char.
+		else if ((pattern.charAt(patIndex) == '.') || (pattern.charAt(patIndex) == text.charAt(textIndex))){
+			return  isMatchHelper(text, pattern, textIndex + 1, patIndex + 1);
+		}
+		else {
+			return false;
+		}
+
+	}
 }
