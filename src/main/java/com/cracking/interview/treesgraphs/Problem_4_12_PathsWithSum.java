@@ -1,6 +1,7 @@
 package com.cracking.interview.treesgraphs;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import com.cracking.interview.treesgraphs.Tree.Node;
 
@@ -20,26 +21,38 @@ public class Problem_4_12_PathsWithSum {
 		tree.root.right = new Node(-3);
 		tree.root.right.right = new Node(11);
 		
-		int targetSum = 2;
+		int targetSum = 0;
 		//findPaths(tree.root, value);
-		countPathSums(tree.root, new HashSet<>(), targetSum, 0);
+		countPathSums(tree.root, new LinkedHashSet<>(), targetSum, 0);
 		System.out.println(count);
 	}
 	
 	
-	private static void countPathSums(Node node, HashSet<Integer> set, int targetSum, int sum) {
+	//Space: O(logN) as we store only elements as per depth of the tree, Time: O(N) as we need to visit all nodes
+	private static void countPathSums(Node node, LinkedHashSet<Integer> set, int targetSum, int sum) {
 		if(node == null) return;
 		
 		sum = sum + node.value;
-		if(sum == targetSum) count++;
+		
+		if(node.value == targetSum) count++;
+		else if(sum == targetSum) count++;
 		else if(set.contains(sum - targetSum)) count++;
-		else set.add(sum);
+		
+		set.add(sum);
 		
 		countPathSums(node.left, set, targetSum, sum);
+		if(node.left != null) {
+			set.remove(sum + node.left.value);
+		}
+		
 		countPathSums(node.right, set, targetSum, sum);
+		if(node.right != null) {
+			set.remove(sum + node.right.value);
+		}
 	}
 	
 	
+	//Space: O(NlogN) as for each node we are finding the path with sum, Time: O(NlogN) as for each node, we traverse the sub-tree of the node.
 	private static void findPaths(Node root, int value) {
 		if(root == null) return;
 		
