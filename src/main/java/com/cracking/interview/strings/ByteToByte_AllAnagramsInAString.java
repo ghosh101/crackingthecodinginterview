@@ -2,54 +2,62 @@ package com.cracking.interview.strings;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class ByteToByte_AllAnagramsInAString {
 
 	public static void main(String[] args) {
-		String s = "abab";
-		String p = "ab";
+		String s = "baa";
+		String p = "aa";
 
 		List<Integer> list = findAllAnagrams(s, p);
-		list.forEach(i -> System.out.print(i));
+		list.forEach(i -> System.out.println(i));
 	}
 
+	//Time: O(N) as we have two pointers working together to reach the end, Space: O(M+N) where M and N are the size of the 2 strings
 	private static List<Integer> findAllAnagrams(String s, String t) {
-		List<Integer> result = new LinkedList<>();
-		if(t.length()> s.length()) return result;
+		List<Integer> result = new ArrayList<>();
+		
 		Map<Character, Integer> map = new HashMap<>();
-		for(char c : t.toCharArray()){
-			map.put(c, map.getOrDefault(c, 0) + 1);
+		for(int i = 0; i<t.length(); i++) {
+			int val = map.getOrDefault(t.charAt(i), 0);
+			map.put(t.charAt(i), val + 1);
 		}
-		int counter = map.size();
-
-		int begin = 0, end = 0;
-
-		while(end < s.length()){
+		
+		Map<Character, Integer> charMap = new HashMap<>();
+		int frequenciesToMatch = map.size();
+		int freqMatched = 0;
+		
+		int start = 0;
+		int end = 0;
+		while(end < s.length()) {
 			char c = s.charAt(end);
-			if( map.containsKey(c) ){
-				map.put(c, map.get(c)-1);
-				if(map.get(c) == 0) counter--;
+			int value = charMap.getOrDefault(c, 0);
+			charMap.put(c, value + 1);
+			
+			boolean isValidChar = map.containsKey(c);
+			if(isValidChar && map.get(c) == charMap.get(c)) {
+				freqMatched++;
+			}
+			
+			while(freqMatched == frequenciesToMatch) {
+				char ch = s.charAt(start);
+				charMap.put(ch, charMap.get(ch) - 1);
+				
+				isValidChar = map.containsKey(ch);
+				if(isValidChar && charMap.get(ch) < map.get(ch)) {
+					freqMatched--;
+				}
+				
+				if(t.length() == end-start+1) {
+					result.add(start);
+				}
+				start++;
 			}
 			end++;
-
-			while(counter == 0){
-				char tempc = s.charAt(begin);
-				if(map.containsKey(tempc)){
-					map.put(tempc, map.get(tempc) + 1);
-					if(map.get(tempc) > 0){
-						counter++;
-					}
-				}
-				if(end-begin == t.length()){
-					result.add(begin);
-				}
-				begin++;
-			}
-
 		}
+		
 		return result;	
 	}
 

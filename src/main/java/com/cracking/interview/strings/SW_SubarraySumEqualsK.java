@@ -10,6 +10,8 @@ public class SW_SubarraySumEqualsK {
 		System.out.println(count);
 	}
 
+	//Not a Sliding Window problem
+	//Need to use a hashmap
 	private static int countSubarraySumEqualsK(int[] arr, int k) {
 		int count = 0;
 		

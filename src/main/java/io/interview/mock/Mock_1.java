@@ -1,9 +1,8 @@
 package io.interview.mock;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /*
@@ -28,48 +27,59 @@ public class Mock_1 {
 
 	public static void main(String[] args) {
 
-		String s = "acbbsab";
-		Set<Character> set = new HashSet<>();
-		set.add('a');
-		set.add('b');
-		set.add('c');
-		set.add('s');
+		String s = "ADOBECODEBANC";
+		
+		Map<Character, Integer> map = new HashMap<>();
+		map.put('A', 1);
+		map.put('C', 1);
+		map.put('B', 1);
+		//map.put('s', 1);
 
 		//String subString = findMinLengthSubstring(s, set);
-		String subStringOptimal = findMinLengthSubstringOptimal(s, set);
+		String subStringOptimal = findMinLengthSubstringOptimal(s, map);
 		System.out.println(subStringOptimal);
-
 	}
 
 	//O(N) solution -- Based on sliding window principle
-	private static String findMinLengthSubstringOptimal(String s, Set<Character> set) {
+	private static String findMinLengthSubstringOptimal(String s, Map<Character, Integer> map) {
 		int min_length = Integer.MAX_VALUE;
 		String result = "";
 
-		List<Character> tempList = new ArrayList<>();
-		for(int i=0, j=0; ; ) {
-			if(tempList.containsAll(set)) {
-				if(tempList.size() <= min_length) min_length = tempList.size();
-				result = tempList.toString();
-
-				tempList.remove(0);
-				i++;
+		Map<Character, Integer> charMap = new HashMap<>();
+		int charactersToMatch = map.size();
+		int freqMatched = 0;
+		
+		int start = 0;
+		int end = 0;
+		while(end < s.length()) {
+			char c = s.charAt(end);
+			int value = charMap.getOrDefault(c, 0);
+			charMap.put(c, value + 1);
+			
+			boolean isValidCharacter = map.containsKey(c);
+			if(isValidCharacter && charMap.get(c) == map.get(c)) {
+				freqMatched++;
+			}
+			
+			while(freqMatched == charactersToMatch) {
+				char ch = s.charAt(start);
+				charMap.put(ch, charMap.get(ch) - 1);
 				
-				continue;
+				isValidCharacter = map.containsKey(ch);
+				if(isValidCharacter && charMap.get(ch) < map.get(ch)) {
+					freqMatched--;
+				}
+				
+				String str = s.substring(start, end + 1);
+				if(str.length() < min_length) {
+					min_length = str.length();
+					result = str;
+				}
+				start++;
 			}
-			
-			if(j >= s.length()) break;
-			
-			if(set.contains(s.charAt(j))){
-				tempList.add(s.charAt(j));
-				j++;
-			}else {
-				tempList = new ArrayList<>();
-				j++;
-			}
-
+			end++;
 		}
-
+		
 		return result;
 	}
 
