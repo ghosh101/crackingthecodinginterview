@@ -15,7 +15,7 @@ public class ByteToByte_AllAnagramsInAString {
 		list.forEach(i -> System.out.println(i));
 	}
 
-	//Time: O(N) as we have two pointers working together to reach the end, Space: O(M+N) where M and N are the size of the 2 strings
+	//Time: O(S + T) as we have two pointers working together to reach the end, Space: O(S + T) where M and N are the size of the 2 strings
 	private static List<Integer> findAllAnagrams(String s, String t) {
 		List<Integer> result = new ArrayList<>();
 		
